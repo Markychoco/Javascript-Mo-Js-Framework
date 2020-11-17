@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mo-js/0.288.2/mo.min.js" integrity="sha512-/rH/MTr+peRDH0xWbbfUgzdLUu8FRdQ24CXdNiDHHcdR7QyYFL3lob2hHtieIKBJsJcWtF0S2bhdcubsZkXKxw==" crossorigin="anonymous"></script>
+<script>
+	const circle = new mojs.Shape({
+left : 0,
+top : 0,
+strokeWidth: 8,
+fill: 'none',
+radius: 80,
+scale: {0:1},
+opacity: {10:0},
+shape: 'circle',
+stroke: 'black',
+strokeWidth:8,
+fill: 'none',
+duration:500,
+});
+
+const burst  = new mojs.Burst({
+count:10,
+left: 0,
+top: 0,
+children:{
+shape:['circle', 'rect', 'curve' ],
+fill:['yellow', 'red', 'green'],
+degreeShift: 'rand(-360, 360)',
+delay: 'stagger(0, 30)'
+},
+duration:400
+})
+   const bang = new mojs.Burst({
+   	left:0,
+   	top: 0,
+   	radius:{2:40},
+   	angle:45,
+   	count:8,
+   	children:{
+   		radius:8,
+   		fill:'blue',
+   		scale:{1:0, easing:'sin.in'},
+   		pathScale:[0.7, null],
+   		duration:[500, 700],
+   		degreeShift:[13, null],
+   	}
+   })
+document.onclick = (e) =>{
+	const position = {
+		x: e.pageX,
+		y: e.pageY,
+	}
+	circle.tune(position);
+	circle.replay();
+	burst.tune(position);
+	burst.replay();
+	bang.tune(position);
+	bang.replay();
+}
+</script>
+</body>
+</html>
